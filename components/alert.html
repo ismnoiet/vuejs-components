@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+		
+	<style type="text/css">
+		.fade-transition{
+			transition: all .5s ease;	
+		}
+		.fade-enter,.fade-leave{
+			opacity: 0;
+		}
+		.alert{
+			padding: 10px;			
+			background-color: rgba(197, 197, 197, 0.09);
+
+		}
+		.alert .close{
+			float: right;
+			cursor: pointer;
+		}
+		.success{
+			background-color: green ;
+		}
+		.danger{
+			background: red;			
+		}
+		.warning{
+			background-color: orange;
+		}
+	</style>
+	<div id="app">		
+		<alert type="success">Success Message!</alert>
+		<alert type="warning">Warning Message</alert>
+		<alert type="danger">Danger Message</alert>				
+	</div>	
+
+	<script src="../libs/vue.js"> </script>
+	<script type="text-template" id="alert-template">
+		<div class="alert" :class="type" v-show="enabled" transition="fade">
+			<p>
+				<slot></slot>
+				<span class="close" @click="closeAlert">&#10007</span>				
+			</p>
+		</div>
+	</script>
+	
+	<script>
+		Vue.component('alert',{
+			template:'#alert-template',
+			methods:{
+				closeAlert:function(){
+					this.enabled = false;
+				}
+			},
+			data:function(){
+				return {
+					enabled:true
+				};
+			},
+			props:['type']
+		});
+
+		vm = new Vue({
+			el:'#app'			
+		})		
+	</script>
+		
+</body>
+</html>
